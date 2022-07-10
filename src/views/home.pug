@@ -11,7 +11,10 @@ html(lang="en")
             h1 Zoom
         main
             ul
-            form
+            form#nickname
+                input(type ="text", placeholder = "이름을 작성하세요.", required)
+                button 등록하기
+            form#message
                 input(type ="text", placeholder = "메시지를 작성하세요.", required)
                 button 보내기
             script(src = "/public/js/app.js")

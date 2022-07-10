@@ -1,5 +1,6 @@
 const messageList = document.querySelector("ul")
-const messageForm = document.querySelector("form")
+const messageForm = document.querySelector("#message")
+const nicknameForm = document.querySelector("#nickname")
 const socket = new WebSocket(`ws://${window.location.host}`)
 
 socket.addEventListener("open", () => {
@@ -7,7 +8,9 @@ socket.addEventListener("open", () => {
 })
 
 socket.addEventListener("message",(message)=> {
-    console.log("사용자로부터", message.data, "라는 메시지가 왔습니다.")
+    const li = document.createElement("li")
+    li.innerText = message.data
+    messageList.append(li)
 })
 
 socket.addEventListener("close", () => {
@@ -30,5 +33,16 @@ function handleSubmit(event) {
     socket.send(input.value);
     input.value = "";
   }
-  
-  messageForm.addEventListener("submit", handleSubmit);
+
+function handlerNickSubmit(nickname){
+    nickname.preventDefault();
+    const input = nicknameForm.querySelector("input")
+    socket.send({
+        type : "nickname",
+        payload : input.value,
+    })
+    
+}
+
+messageForm.addEventListener("submit", handleSubmit);
+nicknameForm.addEventListener("submit", handlerNickSubmit)

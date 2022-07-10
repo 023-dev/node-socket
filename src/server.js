@@ -24,7 +24,9 @@ wss.on("connection", (socket) => {
         console.log("사용자로부터 연결이 끊겼습니다.")
     })
     socket.on("message", (message) => {
-        socket.send(message.toString())
+        sockets.forEach((aSocket) =>
+        aSocket.send(message.toString())
+        )
     })
 })
 
