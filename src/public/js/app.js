@@ -3,6 +3,11 @@ const messageForm = document.querySelector("#message")
 const nicknameForm = document.querySelector("#nickname")
 const socket = new WebSocket(`ws://${window.location.host}`)
 
+function makeMessage(type, payload){
+    const message = {type, payload}
+    return JSON.stringify(message);
+}
+
 socket.addEventListener("open", () => {
     console.log("서버에 연결되었습니다.")
 })
@@ -30,17 +35,14 @@ socket.addEventListener("close", () => {
 function handleSubmit(event) {
     event.preventDefault();
     const input = messageForm.querySelector("input");
-    socket.send(input.value);
+    socket.send(makeMessage("new_message",input.value));
     input.value = "";
   }
 
 function handlerNickSubmit(nickname){
     nickname.preventDefault();
     const input = nicknameForm.querySelector("input")
-    socket.send({
-        type : "nickname",
-        payload : input.value,
-    })
+    socket.send(makeMessage("nickname",input.value))
     
 }
 
