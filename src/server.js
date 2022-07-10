@@ -15,12 +15,20 @@ const handleListen = () => console.log(`Listening on http://localhost:3000`);
 
 const server = http.createServer(app)//http server
 const wss = new WebSocket.Server({server})
+const sockets = []
 
-function handleConnection(socket){
-    console.log(socket)
-}
+wss.on("connection", (socket) => {
+    sockets.push(socket);
+    console.log("사용자와 연결되었습니다.")
+    socket.on("close", () => {
+        console.log("사용자로부터 연결이 끊겼습니다.")
+    })
+    socket.on("message", (message) => {
+        socket.send(message.toString())
+    })
+})
 
-wss.on("connection", handleConnection)
 
 server.listen(3000, handleListen);
+
 
