@@ -1,6 +1,7 @@
 import http from "http";
 import SocketIO from "socket.io"
 import express from "express";
+import { Socket } from "dgram";
 
 const app = express();
 
@@ -14,9 +15,19 @@ const httpServer = http.createServer(app)//http server
 const wsServer = SocketIO(httpServer)
 
 wsServer.on("connection", (socket) => {
-    socket.on("enterRoom", (msg, done) => {
-        console.log(msg);
-        setTimeout(() => { done("hello from the back-end") }, 15000)
+    socket.onAny((event)=> {
+        console.log(`Socket Event : ${event}`)
+    })
+     socket.on("enterRoom", (roomNumber, showRoom) => {
+        socket.join(roomNumber)
+        showRoom()
+
+    // socket.on("enterRoom", (roomNumber, done) => {
+    //     console.log(socket.id)
+    //     console.log(socket.rooms);
+    //     socket.join(roomNumber)
+    //     console.log(socket.rooms);
+    //     setTimeout(() => { done("hello from the back-end") }, 15000)
     })
 })
 
