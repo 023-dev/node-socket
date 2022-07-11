@@ -49,3 +49,7 @@ npm run dev
 #install ws
 npm i ws
 • ws : webSocket 
+
+#install Socket.io
+npm i socket.io --global 
+• socket.io : better than webSocket 
