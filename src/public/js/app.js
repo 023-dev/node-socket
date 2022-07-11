@@ -6,9 +6,8 @@ const form = welcome.querySelector("form")
 function handleRoomSubmit(event){
     event.preventDefault()
     const input = form.querySelector("input")
-    socket.emit("enterRoom", {payload : input.value}, () => {
-        console.log("server is done")
-    })
+    socket.emit("enterRoom", {payload : input.value})
+    //socket.emit("enterRoom", {payload : input.value}, () => {console.log("server is done")}) //socketIO Callback
     input.value = ""
 }
 
