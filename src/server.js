@@ -14,31 +14,13 @@ const httpServer = http.createServer(app)//http server
 const wsServer = SocketIO(httpServer)
 
 wsServer.on("connection", (socket) => {
-    console.log(socket)
+    socket.on("enterRoom", (msg, done) => {
+        console.log(msg);
+        setTimeout(() => {
+            done();
+        }, 10000)
+    })
 })
-
-//WebSocket
-//const wss = new WebSocket.Server({server})
-// const sockets = []
-
-// wss.on("connection", (socket) => {
-//     sockets.push(socket);
-//     socket["nickname"] = "Anno"
-//     console.log("사용자와 연결되었습니다.")
-//     socket.on("close", () => {
-//         console.log("사용자로부터 연결이 끊겼습니다.")
-//     })
-//     socket.on("message", (msg) => {
-//         const message = JSON.parse(msg)
-//         switch (message.type){
-//             case 'new_message':
-//                 sockets.forEach((aSocket) => aSocket.send(`${socket.nickname} : ${message.payload}`))
-//             case 'nickname':
-//                 socket["nickname"] = message.payload
-//         }
-        
-//     })
-// })
 
 const handleListen = () => console.log(`Listening on http://localhost:3000`);
 httpServer.listen(3000, handleListen);

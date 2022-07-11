@@ -10,8 +10,13 @@ html(lang="en")
         header
             h1 Zoom
         main
-            div#welcome
-                input(placeholder ="room name", required, type = "text")
-                button Enter Room 
-        script(src="/socket.io/socket.io.js")   
-        script(src = "/public/js/app.js")
+            form#nickname
+                input(type ="text", placeholder = "이름을 작성하세요.", required)
+                button 등록하기
+
+            ul
+            
+            form#message
+                input(type ="text", placeholder = "메시지를 작성하세요.", required)
+                button 보내기
+            script(src = "/public/js/app.js")
